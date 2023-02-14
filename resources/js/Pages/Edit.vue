@@ -2,9 +2,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {useForm} from "@inertiajs/vue3";
 import { Link } from '@inertiajs/vue3'
+
 export default {
     props: {
-        boards: Object,
+        boards: Array,
         error: Array
     },
     components: {
@@ -13,13 +14,14 @@ export default {
     },
     setup(props){
         const form = useForm({
-            title: props.boards.title,
-            description: props.boards.description,
-            price: props.boards.price,
-            user_id: props.boards.user_id,
+            title: props.boards.map((e) => e.title ),
+            description: props.boards.map((e) => e.description ),
+            price: props.boards.map((e) => e.price ),
+            user_id: props.boards.map((e) => e.user_id )
+
         });
         function update() {
-            form.put(this.route('board.update', props.boards.user_id))
+            form.put(this.route('board.update', props.boards))
         }
         return{form, update};
     }
@@ -27,14 +29,15 @@ export default {
 </script>
 <template>
     <AuthenticatedLayout>
-        <div v-for="board in $boards" :key="board.id">
+        {{boards}}
+        <div v-for="board in boards" :key="board.id">
         </div>
 
         <div v-if="errors" class="alert alert-danger">
             <ul v-for="error in errors" :key="error.id">
             </ul>
         </div>
-        <form  @submit.prevent="form.update('/board')">
+        <form  @submit.prevent="form.update('board.update')">
             <div class="input_form_div">
                 <p>Название:</p>
                 <input
@@ -52,8 +55,8 @@ export default {
                     id="description"
                     class="textarea"
                     type="text"
-                    name="description">
-                    {{ form.description }}
+                    name="description"
+                    v-model="form.description">
                 </textarea>
                 <div v-if="form.errors.title">{{ form.errors.description }}</div>
             </div>
@@ -75,7 +78,7 @@ export default {
                     class="input_form"
                     type="text"
                     name="salesman"
-                    v-model="form.salesman"
+                    v-model="form.user_id"
                 />
             </div>
             <div class="loadingAndSave">

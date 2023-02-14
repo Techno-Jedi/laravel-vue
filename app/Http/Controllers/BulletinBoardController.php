@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
+
 class BulletinBoardController extends Controller
 {
     /**
@@ -64,7 +65,7 @@ class BulletinBoardController extends Controller
      * @param  \App\Models\Bulletin_board  $bulletin_board
      * @return \Illuminate\Http\Response
      */
-    public function edit(Bulletin_board $board)
+    public function edit(BulletinBoard $board)
     {
         $ads = $board->toArray();
         return Inertia::render("Edit",["boards" => BulletinBoard::find($ads)]);

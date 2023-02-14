@@ -3,7 +3,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 export default {
     props: {
-        boards: Array
+        board: Array,
+        user_id:String
     },
     components: {
         AuthenticatedLayout
@@ -12,14 +13,12 @@ export default {
 </script>
 <template>
     <AuthenticatedLayout>
-sadasd
-        <div v-for="ads in board" :key="ads.id">
-
-<div>Название:{{ads.title}} </div>
-<div>Описание:{{ads.description}} </div>
-<div>Цена:{{ads.price}} </div>
-<div>Продавец:{{ads.salesman}} </div>
-</div>
+        <div v-for="board in board" :key="board.id">
+            <div>Название:{{board.title}} </div>
+            <div>Описание:{{board.description}} </div>
+            <div>Цена:{{board.price}} </div>
+            <div>Продавец:{{board.user_id}} </div>
+        </div>
 </AuthenticatedLayout>
 </template>
 

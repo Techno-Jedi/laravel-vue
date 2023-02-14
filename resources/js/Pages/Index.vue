@@ -1,5 +1,6 @@
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Link } from '@inertiajs/vue3'
 
 export default {
     props: {
@@ -7,7 +8,8 @@ export default {
         user_id:String
     },
     components: {
-        AuthenticatedLayout
+        AuthenticatedLayout,
+        Link,
     }
 }
 </script>
@@ -27,9 +29,9 @@ export default {
                 </div>
             </div>
             <div class="description-salesman">
-                <a href="board/{{board.id}}">
+                <Link :href="route('board.show',{board})">
                     <div>Название модели:{{board.title}}</div>
-                </a>
+                </Link>
                 <div class="description">Описание:{{board.description}}</div>
                 <div>Продавец:{{board.user_id}}</div>
             </div>
