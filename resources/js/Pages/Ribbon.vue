@@ -6,7 +6,6 @@ import { Link } from '@inertiajs/vue3'
 export default {
     props: {
         boards: Array,
-        user_id:String
     },
     components: {
         AuthenticatedLayout,
@@ -18,7 +17,7 @@ export default {
                 this.$inertia.delete(this.route("board.destroy", id))
             }
         }
-    },
+    }
 }
 </script>
 
@@ -29,7 +28,7 @@ export default {
         </template>
 
             <div v-for="board in boards" :key="board.id">
-                   <div>{{board.id}}</div>
+                   <div>{{board.user_id}}</div>
                 <div class="boardAds">
                     <div class="imagesAndPhone">
                         <div class= "image">Картинка:{{ board.image }}</div>
@@ -48,11 +47,9 @@ export default {
                                 <div class="change"><button>Изменить </button></div>
                             </Link>
                             
-                            <!-- <form @submit.prevent="form.post('/board')"> -->
                                 <div class="delete">
                                     <Link @click="destroy(board.id)" :href="route('board.store', {id:board.id})" method="post" as="button">Удалить</Link>
                                 </div>
-                            <!-- </form> -->
                         </div>
                     </div>
 

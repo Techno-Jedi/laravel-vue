@@ -1,32 +1,43 @@
-<script setup>
+<script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {useForm} from "@inertiajs/vue3";
 
-const form = useForm({
-    title: '',
-    description: '',
-    price: '',
-    user_id: '',
+export default {
+    props: {
+        user_id: Array,
+        error: Array
+    },
+    components: {
+        AuthenticatedLayout
+    },
+    setup(props) {
+        const form = useForm({
+            title: null,
+            description: null,
+            price: null,
+            user_id: props.user_id,
+        });
 
-});
-const submit = () => {
-    form.post(route('/board'), {
-        onFinish: () => form.reset('/board'),
-    });
+        console.log("sadsad", props)
+        
+        function store() {
+            form.post(route('board.store'))
+        }
+        return {form, store};
+    },
 };
 </script>
 
 <template>
     <AuthenticatedLayout>
         <div class="adsForm">
-        <form @submit.prevent="form.post('/board')">
+        <form @submit.prevent="store">
 
-            <div>Продавец:
+            <div>
                 <input
                     id="user_id"
                     name="user_id"
-                    type="text"
-
+                    type="hidden"
                     v-model="form.user_id"
                     />
             </div>

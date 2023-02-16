@@ -22,10 +22,7 @@ export default {
             id: props.boards.map((e) => e.id)[0],
 
         });
-        const f = {
-        x:console.log("sadsad", form.title)
-    }
-
+        
         function update() {
           form.put(route('board.update', form.id))
         }
@@ -37,10 +34,6 @@ export default {
 </script>
 <template>
     <AuthenticatedLayout>
- 
-        <div v-for="board in boards" :key="board.id">
-        </div>
-{{form }}
         <div v-if="errors" class="alert alert-danger">
             <ul v-for="error in errors" :key="error.id">
             </ul>
@@ -79,11 +72,10 @@ export default {
                 <div v-if="form.errors.title">{{ form.errors.price }}</div>
             </div>
             <div class="input_form_div mb-10">
-                <p>Продавец:</p>
                 <input
                     id="salesman"
                     class="input_form"
-                    type="text"
+                    type="hidden"
                     name="salesman"
                     v-model="form.user_id"
                 />

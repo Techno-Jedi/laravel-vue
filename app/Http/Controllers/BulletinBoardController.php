@@ -33,7 +33,7 @@ class BulletinBoardController extends Controller
     public function create()
     {
        return Inertia::render("Create", [
-        "user_id" => Auth::id(),
+        "user_id" => Auth::user()->name,
         "boards" => BulletinBoard::all(),
     ]);
     }
@@ -47,7 +47,6 @@ class BulletinBoardController extends Controller
     public function store(StoreBoardRequest $request)
     {
         BulletinBoard::create($request->all());
-
         return redirect("/board");
     }
 
@@ -101,6 +100,6 @@ class BulletinBoardController extends Controller
     }
     public function myfunc(BulletinBoard $board)
     {
-       return Inertia::render("Ribbon", ["boards" =>BulletinBoard::where('user_id', Auth::id())->get()]);
+       return Inertia::render("Ribbon", ["boards" =>BulletinBoard::where('user_id', Auth::user()->name)->get()]);
     }
 }
