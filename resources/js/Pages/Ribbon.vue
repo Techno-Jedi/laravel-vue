@@ -43,9 +43,11 @@ export default {
                     <div class="priceAndChange" >
                         <div class="price">Цена:{{ board.price }}</div>
                         <div class="DeleteAndChange">
+
                             <Link :href="route('board.edit',{board})">
                                 <div class="change"><button>Изменить </button></div>
                             </Link>
+                            
                             <!-- <form @submit.prevent="form.post('/board')"> -->
                                 <div class="delete">
                                     <Link @click="destroy(board.id)" :href="route('board.store', {id:board.id})" method="post" as="button">Удалить</Link>

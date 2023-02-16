@@ -32,7 +32,10 @@ class BulletinBoardController extends Controller
      */
     public function create()
     {
-       return Inertia::render("Create", ["user_id" => Auth::id()]);
+       return Inertia::render("Create", [
+        "user_id" => Auth::id(),
+        "boards" => BulletinBoard::all(),
+    ]);
     }
 
     /**
@@ -82,7 +85,7 @@ class BulletinBoardController extends Controller
     {
         $data = $request->all();
         $board->update($data);
-        return to_route("/board");
+        return redirect("/board");
     }
 
     /**

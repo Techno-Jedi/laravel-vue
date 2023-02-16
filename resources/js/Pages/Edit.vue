@@ -1,5 +1,6 @@
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Method } from '@inertiajs/core';
 import {useForm} from "@inertiajs/vue3";
 import { Link } from '@inertiajs/vue3'
 
@@ -14,36 +15,42 @@ export default {
     },
     setup(props){
         const form = useForm({
-            title: props.boards.map((e) => e.title ),
-            description: props.boards.map((e) => e.description ),
-            price: props.boards.map((e) => e.price ),
-            user_id: props.boards.map((e) => e.user_id )
+            title: props.boards.map((e) => e.title )[0],
+            description: props.boards.map((e) => e.description)[0],
+            price: props.boards.map((e) => e.price)[0],
+            user_id: props.boards.map((e) => e.user_id)[0],
+            id: props.boards.map((e) => e.id)[0],
 
         });
+        const f = {
+        x:console.log("sadsad", form.title)
+    }
+
         function update() {
-            form.put(this.route('board.update', props.boards))
+          form.put(route('board.update', form.id))
         }
         return{form, update};
-    }
+    }    
 }
+    
+
 </script>
 <template>
     <AuthenticatedLayout>
-        {{boards}}
+ 
         <div v-for="board in boards" :key="board.id">
         </div>
-
+{{form }}
         <div v-if="errors" class="alert alert-danger">
             <ul v-for="error in errors" :key="error.id">
             </ul>
         </div>
-        <form  @submit.prevent="form.update('board.update')">
+        <form  @submit.prevent="update">
             <div class="input_form_div">
                 <p>Название:</p>
                 <input
                     class="input_form"
-                    id="title"
-                    type="text"
+                   
                     name="title"
                     v-model="form.title"
                 />
@@ -67,7 +74,7 @@ export default {
                     id="price"
                     type="number"
                     name="price"
-                    v-model="form.price"
+                    v-model.number="form.price"
                 />
                 <div v-if="form.errors.title">{{ form.errors.price }}</div>
             </div>
@@ -84,12 +91,12 @@ export default {
             <div class="loadingAndSave">
                 <div class="imagesAndPhone">
                     <div class="image">
-                        <img src="{{ Vite::asset('public/board/' . form.image) }}"/>
+                        <!-- <img src="{{ Vite::asset('public/board/' . form.image) }}"/> -->
 
                     </div>
                     <div class="button ">
                         <p>
-                            <button type="submit">Сохранить</button>
+                            <button :disabled="form.processing" type="submit">Сохранить</button>
                         </p>
                     </div>
                 </div>
