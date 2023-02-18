@@ -7,6 +7,7 @@ use App\Models\BulletinBoard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
 
 
 class BulletinBoardController extends Controller
@@ -45,9 +46,25 @@ class BulletinBoardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StoreBoardRequest $request)
-    {
-        BulletinBoard::create($request->all());
-        return redirect("/board");
+    {  
+        if ($request->hasFile('image')) {
+            $userId =  Auth::user()->name;
+            $ads = new BulletinBoard();
+            $ads->title = $request->input('title');
+            $ads->description = $request->input('description');
+            $ads->price = $request->input('price');
+            $ads->user_id =  $userId;
+            $file = $request->file('image');
+            $upload_folder = 'public/board' ;
+            $filename = $file->getClientOriginalName();
+            $img = Storage::putFileAs($upload_folder, $file, $filename);
+            $imgName = substr($filename, 0);
+            $ads->image = $imgName;
+            $ads->save();
+            }else{
+                BulletinBoard::create($request->all());
+            }
+            return redirect("/board");
     }
 
     /**
@@ -84,7 +101,27 @@ class BulletinBoardController extends Controller
     {
         $data = $request->all();
         $board->update($data);
-        return redirect("/board");
+
+    if ($request->hasFile('picture')) {
+          $file = $request->file('picture');
+          $upload_folder = 'public/board' ;
+          $filename = $file->getClientOriginalName();
+          $img = Storage::delete($upload_folder, $file, $filename);
+          $userId = Auth::user()->name;
+          $ads = new BulletinBoard();
+          $ads->title = $request->input('title');
+          $ads->description = $request->input('description');
+          $ads->price = $request->input('price');
+          $ads->salesman =  $userId;
+          $file = $request->file('picture');
+          $upload_folder = 'public/board' ;
+          $filename = $file->getClientOriginalName();
+          $img = Storage::putFileAs($upload_folder, $file, $filename);
+          $imgName = substr($filename, 0);
+          $ads->image = $imgName;
+          $ads->save();
+          }
+         return redirect('board');
     }
 
     /**

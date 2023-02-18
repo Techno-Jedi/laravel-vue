@@ -16,6 +16,7 @@ export default {
             description: null,
             price: null,
             user_id: props.user_id,
+            image:null,
         });
 
         console.log("sadsad", props)
@@ -76,6 +77,7 @@ export default {
             <div class="loadingAndSave">
                 <div class="imagesAndPhone">
                     <div class="image">
+                        <img src="{{ Vite::asset('public/storage/board/')}}">  
                     </div>
                     <div class="button ">
                         <p>
@@ -91,6 +93,7 @@ export default {
                             id="image"
                             name="image"
                             type="file"
+                            @input="form.image = $event.target.files[0]"
                         />
                     </div>
                     <div v-if="form.errors.image">{{ form.errors.image }}</div>

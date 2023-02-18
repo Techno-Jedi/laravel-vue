@@ -31,7 +31,9 @@ export default {
                    <div>{{board.user_id}}</div>
                 <div class="boardAds">
                     <div class="imagesAndPhone">
-                        <div class= "image">Картинка:{{ board.image }}</div>
+                        <div class= "image">
+                            <img src="{{ Vite::asset('public/storage/board/' .  $board.image )}}">
+                        </div>
                     </div>
                     <div class="description-salesman">
                         <Link :href="route('board.show',{board})">

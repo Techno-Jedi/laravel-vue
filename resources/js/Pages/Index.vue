@@ -24,7 +24,9 @@ export default {
 
 
             <div class="imagesAndPhone">
-                <div class= "image">Картинка:{{ board.filename }}</div>
+                <div class= "image">
+                    <img src="{{ Vite::asset('public/storage/board/' .  $board.image )}}">
+                    </div>
                 <div class="button"> <p>Показать телефон</p>
                 </div>
             </div>
