@@ -25,7 +25,7 @@ export default {
 
             <div class="imagesAndPhone">
                 <div class= "image">
-                    <img src="{{ Vite::asset('public/storage/board/' .  $board.image )}}">
+                    <img v-bind:src="`/storage/board/${board.image}`" >
                     </div>
                 <div class="button"> <p>Показать телефон</p>
                 </div>

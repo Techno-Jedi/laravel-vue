@@ -77,7 +77,7 @@ export default {
             <div class="loadingAndSave">
                 <div class="imagesAndPhone">
                     <div class="image">
-                        <img src="{{ Vite::asset('public/storage/board/')}}">  
+                        <img v-bind:src="`/storage/board/${form.image}`" >
                     </div>
                     <div class="button ">
                         <p>

@@ -32,7 +32,7 @@ export default {
                 <div class="boardAds">
                     <div class="imagesAndPhone">
                         <div class= "image">
-                            <img src="{{ Vite::asset('public/storage/board/' .  $board.image )}}">
+                            <img v-bind:src="`/storage/board/${board.image}`">
                         </div>
                     </div>
                     <div class="description-salesman">

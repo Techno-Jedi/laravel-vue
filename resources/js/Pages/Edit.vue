@@ -20,14 +20,39 @@ export default {
             price: props.boards.map((e) => e.price)[0],
             user_id: props.boards.map((e) => e.user_id)[0],
             id: props.boards.map((e) => e.id)[0],
+            image:props.boards.map((e) => e.image)[0]
 
         });
-        
+        console.log("Form",form);
         function update() {
           form.put(route('board.update', form.id))
         }
         return{form, update};
-    }    
+    },
+
+
+   methods: {
+      onFileChange(e) {
+       
+        // let file = e.target.files[0];
+        // let reader = new FileReader();
+        // reader.onloadend = () =>{
+        //     this.form.image = reader.result;
+        // }
+        // reader.readAsDataURL(file)
+        //  if (!files.length) {
+        //      console.log('no files');
+        //  }
+
+        //  const file = files[0];
+         console.log("sadasdasd",this.form.image = file.name);
+         console.log("ff",this.form );
+      return  form.image = e.target.files[0]
+
+        }
+        
+   }
+   
 }
     
 
@@ -38,7 +63,7 @@ export default {
             <ul v-for="error in errors" :key="error.id">
             </ul>
         </div>
-        <form  @submit.prevent="update">
+        <form  @submit.prevent="update"  enctype="multipart/form-data">
             <div class="input_form_div">
                 <p>Название:</p>
                 <input
@@ -80,28 +105,32 @@ export default {
                     v-model="form.user_id"
                 />
             </div>
+            
             <div class="loadingAndSave">
                 <div class="imagesAndPhone">
+
                     <div class="image">
-                        <!-- <img src="{{ Vite::asset('public/board/' . form.image) }}"/> -->
+                        <img v-bind:src="`/storage/board/${form.image}`" 
+                        alt="Картинка">
 
                     </div>
                     <div class="button ">
                         <p>
-                            <button :disabled="form.processing" type="submit">Сохранить</button>
+                            <button type="submit">Сохранить</button>
                         </p>
                     </div>
                 </div>
-                <div class="loading ">
+                <div class="loading">
                     <label for="image">Загрузка</label>
                     <input
                         class="file_img"
                         id="image"
                         name="image"
                         type="file"
+                        v-on:change="onFileChange"
                     />
                 </div>
-
+                <div v-if="form.errors.image">{{ form.errors.image }}</div>
             </div>
         </form>
     </AuthenticatedLayout>
