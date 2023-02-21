@@ -34,7 +34,7 @@ export default {
    methods: {
       onFileChange(e) {
        
-        // let file = e.target.files[0];
+        let file = e.target.files[0];
         // let reader = new FileReader();
         // reader.onloadend = () =>{
         //     this.form.image = reader.result;
@@ -47,7 +47,7 @@ export default {
         //  const file = files[0];
          console.log("sadasdasd",this.form.image = file.name);
          console.log("ff",this.form );
-      return  form.image = e.target.files[0]
+      return this.form.image = file.name
 
         }
         
@@ -127,7 +127,8 @@ export default {
                         id="image"
                         name="image"
                         type="file"
-                        v-on:change="onFileChange"
+                      
+                        @change="onFileChange"
                     />
                 </div>
                 <div v-if="form.errors.image">{{ form.errors.image }}</div>

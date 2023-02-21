@@ -47,7 +47,7 @@ class BulletinBoardController extends Controller
      */
     public function store(StoreBoardRequest $request)
     {   
-            
+            // dd($request->file('image')->store('image'));
         if ($request->hasFile('image')) {
             $userId =  Auth::user()->name;
             $ads = new BulletinBoard();
@@ -116,8 +116,8 @@ class BulletinBoardController extends Controller
         //     }
 
         // }
-        $z =$request->image;
-        dd(Storage::putFile("public",  $z));
+  
+        dd( $request->file('image'));
        
         $data = $request->all();
           $board->update($data);
