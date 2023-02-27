@@ -20,7 +20,7 @@ export default {
         });
 
         console.log("sadsad", props)
-        
+
         function store() {
             form.post(route('board.store'))
         }
@@ -47,6 +47,7 @@ export default {
             <div class="input_form_div">
                 <p>Название</p>
                 <input id="title"
+                       class="input_form"
                        type="text"
                        name="title"
                        v-model="form.title" />
@@ -57,6 +58,7 @@ export default {
             <div class="textarea_div">
                 <p>Описание</p>
                 <textarea id="description"
+                          class="textarea"
                           type="text"
                           name="description"
                           v-model="form.description"></textarea>

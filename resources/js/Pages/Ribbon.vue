@@ -23,12 +23,9 @@ export default {
 
 <template>
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Все моё</h2>
-        </template>
 
-            <div v-for="board in boards" :key="board.id">
-                   <div>{{board.user_id}}</div>
+            <div v-for="board in boards" :key="board.id" >
+
                 <div class="boardAds">
                     <div class="imagesAndPhone">
                         <div class= "image">
@@ -48,7 +45,7 @@ export default {
                             <Link :href="route('board.edit',{board})">
                                 <div class="change"><button>Изменить </button></div>
                             </Link>
-                            
+
                                 <div class="delete">
                                     <Link @click="destroy(board.id)" :href="route('board.store', {id:board.id})" method="post" as="button">Удалить</Link>
                                 </div>

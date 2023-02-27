@@ -33,7 +33,7 @@ export default {
 
    methods: {
       onFileChange(e) {
-       
+
         let file = e.target.files[0];
         // let reader = new FileReader();
         // reader.onloadend = () =>{
@@ -50,11 +50,11 @@ export default {
       return this.form.image = file.name
 
         }
-        
+
    }
-   
+
 }
-    
+
 
 </script>
 <template>
@@ -63,12 +63,13 @@ export default {
             <ul v-for="error in errors" :key="error.id">
             </ul>
         </div>
+        <div class="adsForm">
         <form  @submit.prevent="update"  enctype="multipart/form-data">
             <div class="input_form_div">
                 <p>Название:</p>
                 <input
                     class="input_form"
-                   
+
                     name="title"
                     v-model="form.title"
                 />
@@ -105,12 +106,12 @@ export default {
                     v-model="form.user_id"
                 />
             </div>
-            
+
             <div class="loadingAndSave">
                 <div class="imagesAndPhone">
 
                     <div class="image">
-                        <img v-bind:src="`/storage/board/${form.image}`" 
+                        <img :src="`/storage/board/${form.image}`"
                         alt="Картинка">
 
                     </div>
@@ -127,12 +128,14 @@ export default {
                         id="image"
                         name="image"
                         type="file"
-                      
-                        @change="onFileChange"
+                        @input="onFileChange"
                     />
                 </div>
+
                 <div v-if="form.errors.image">{{ form.errors.image }}</div>
             </div>
+
         </form>
+        </div>
     </AuthenticatedLayout>
 </template>
