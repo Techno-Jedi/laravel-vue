@@ -46,8 +46,25 @@ class BulletinBoardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StoreBoardRequest $request)
-    {   
-            
+    {       
+     
+        // $ads = new BulletinBoard();
+        // $userId =  Auth::user()->name;
+        // if ($request->hasFile('image')) {
+        //     $image = $request->file("image");
+        //     $ext = $image->extension();
+        //     $file = time().".".$ext;
+        //     $image->storeAs("public/board", $file);
+        //     $ads ->image =$file;
+        // }
+
+        // $ads->title = $request->input('title');
+        // $ads->description = $request->input('description');
+        // $ads->price = $request->input('price');
+        // $ads->user_id =  $userId;
+
+        // $ads ->save();
+
         if ($request->hasFile('image')) {
             $userId =  Auth::user()->name;
             $ads = new BulletinBoard();
@@ -100,24 +117,8 @@ class BulletinBoardController extends Controller
      */
     public function update(StoreBoardRequest $request, BulletinBoard $board)
     {   
-
-
-        // $currentPhoto = $request->image;
-
-        // if($request->image != $currentPhoto){
-        //     $name = time().'.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
-
-        //     \BulletinBoard::make($request->image)->save(public_path('public/board').$name);
-        //     $request->merge(['image' => $name]);
-
-        //     $userPhoto = public_path('public/board').$currentPhoto;
-        //     if(file_exists($userPhoto)){
-        //         @unlink($userPhoto);
-        //     }
-
-        // }
-    //    dd($request->hasFile('image'));
- 
+      
+    
 
       if ($request->hasFile('image')) {
             $file = $request->file('image');

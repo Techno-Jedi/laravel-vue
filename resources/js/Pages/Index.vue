@@ -13,16 +13,12 @@ export default {
     },
     methods:{
         showPhone(event){
-            const attrValue = event.target;
-console.log(attrValue)
-
+    const attrValue = event.target;
      if(attrValue){
         let p = attrValue
         p.innerHTML = "+7 XXX XXX XXXX"
         setTimeout(() => p.innerHTML = "Показать телефон", 2000)
-              
         }
-
     }}
 }
 </script>
@@ -35,7 +31,7 @@ console.log(attrValue)
                     <div class="image">
                         <img v-bind:src="`/storage/board/${board.image}`">
                     </div>
-                    <div class="button" ><p @click="showPhone"  v-bind:data-id="`${board.id}`" ref="p">Показать телефон</p>
+                    <div class="button" ><p @click="showPhone"  v-bind:data-id="`${board.id}`">Показать телефон</p>
                     </div>
                 </div>
                 <div class="description-salesman">

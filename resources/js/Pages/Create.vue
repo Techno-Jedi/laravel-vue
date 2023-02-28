@@ -1,32 +1,48 @@
-<script>
+<script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {useForm} from "@inertiajs/vue3";
 
-export default {
-    props: {
-        user_id: Array,
-        error: Array
-    },
-    components: {
-        AuthenticatedLayout
-    },
-    setup(props) {
+const props = defineProps({
+  boards: Array,
+  error: Array,
+})
+
         const form = useForm({
             title: null,
             description: null,
             price: null,
-            user_id: props.user_id,
+            user_id: props.boards.map((e) => e.user_id)[0],
             image:null,
         });
 
-        console.log("sadsad", props)
+        function  onFileChange(e) {
+      let preview = document.querySelector("#AdsImg");
+      let file = document.querySelector("input[type=file]").files[0];
+      let reader = new FileReader();
 
-        function store() {
-            form.post(route('board.store'))
-        }
-        return {form, store};
-    },
-};
+ 
+      reader.onloadend = function () {
+        return preview.src = reader.result;
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+       
+      } else {
+        preview.src = "";
+      }
+      console.log("1",file.name)
+      return form.image = file;
+    }
+
+    function  urlImg(fileName) {
+      return "/public/board/" + fileName;
+    }
+
+    const store = ()  => {
+      form.post(route("board.store"));
+    }
+
 </script>
 
 <template>
@@ -79,7 +95,7 @@ export default {
             <div class="loadingAndSave">
                 <div class="imagesAndPhone">
                     <div class="image">
-                        <img v-bind:src="`/storage/board/${form.image}`" >
+                        <img id="AdsImg" :src="urlImg(form.image)">
                     </div>
                     <div class="button ">
                         <p>
@@ -95,7 +111,7 @@ export default {
                             id="image"
                             name="image"
                             type="file"
-                            @input="form.image = $event.target.files[0]"
+                            @change="onFileChange()"
                         />
                     </div>
                     <div v-if="form.errors.image">{{ form.errors.image }}</div>
