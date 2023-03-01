@@ -4,10 +4,10 @@ import { useForm } from "@inertiajs/vue3";
 
 const props = defineProps({
   boards: Array,
-  errors: Array,
+  errors: Object,
 })
     const form = useForm({
-      
+      _method: 'put',
       title: props.boards.map((e) => e.title)[0],
       description: props.boards.map((e) => e.description)[0],
       price: props.boards.map((e) => e.price)[0],
@@ -15,12 +15,15 @@ const props = defineProps({
       id: props.boards.map((e) => e.id)[0],
       image: props.boards.map((e) => e.image)[0],
     });
-    console.log("1", form);
+ 
+    function update(){
+      form.post(route("board.update", form.id), form);
+    }
+
     function  onFileChange(e) {
       let preview = document.querySelector("#AdsImg");
       let file = document.querySelector("input[type=file]").files[0];
       let reader = new FileReader();
-
  
       reader.onloadend = function () {
         return preview.src = reader.result;
@@ -32,19 +35,14 @@ const props = defineProps({
       } else {
         preview.src = "";
       }
-      console.log("2",form)
       return form.image = file;
     }
 
     function urlImg(fileName) {
-      return "/public/board/" + fileName;
+      return "/storage/board/" + fileName;
     }
 
-    function update(){
-  console.log("3", form);
-
-      form.put(route("board.update", form.id), form);
-    }
+ 
 
 </script>
 
@@ -111,7 +109,7 @@ const props = defineProps({
               id="image"
               name="image"
               type="file"
-              @change="onFileChange"
+              @input="onFileChange"
 
             />
           </div>

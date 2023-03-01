@@ -47,24 +47,6 @@ class BulletinBoardController extends Controller
      */
     public function store(StoreBoardRequest $request)
     {       
-     
-        // $ads = new BulletinBoard();
-        // $userId =  Auth::user()->name;
-        // if ($request->hasFile('image')) {
-        //     $image = $request->file("image");
-        //     $ext = $image->extension();
-        //     $file = time().".".$ext;
-        //     $image->storeAs("public/board", $file);
-        //     $ads ->image =$file;
-        // }
-
-        // $ads->title = $request->input('title');
-        // $ads->description = $request->input('description');
-        // $ads->price = $request->input('price');
-        // $ads->user_id =  $userId;
-
-        // $ads ->save();
-
         if ($request->hasFile('image')) {
             $userId =  Auth::user()->name;
             $ads = new BulletinBoard();
@@ -75,7 +57,7 @@ class BulletinBoardController extends Controller
             $file = $request->file('image');
             $upload_folder = 'public/board' ;
             $filename = $file->getClientOriginalName();
-            $img = Storage::putFileAs($upload_folder, $file, $filename);
+            Storage::putFileAs($upload_folder, $file, $filename);
             $imgName = substr($filename, 0);
             $ads->image = $imgName;
             $ads->save();
@@ -117,33 +99,29 @@ class BulletinBoardController extends Controller
      */
     public function update(StoreBoardRequest $request, BulletinBoard $board)
     {   
-      
-    
-
       if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $upload_folder = 'public/board' ;
-            $filename = $file->getClientOriginalName();
-            $img = Storage::delete($upload_folder, $file, $filename);
-            $userId = Auth::user()->name;
-            $ads = new BulletinBoard();
-            $ads->title = $request->input('title');
-            $ads->description = $request->input('description');
-            $ads->price = $request->input('price');
-            $ads->user_id =  $userId;
-            $file = $request->file('image');
-            $upload_folder = 'public/board' ;
-            $filename = $file->getClientOriginalName();
-            $img = Storage::putFileAs($upload_folder, $file, $filename);
-            $imgName = substr($filename, 0);
-            $ads->image = $imgName;
-            $ads->save();
-            }
-                  
-        $data = $request->all();
-        $board->update($data);
-           return redirect('board');
+        $ads = $request->id;
+        $file = $request->file('image');
+        $upload_folder = 'public/board' ;
+        $filename = $file->getClientOriginalName();
+        Storage::putFileAs($upload_folder, $file, $filename);
+        $imgName = substr($filename, 0);
+        BulletinBoard::where(
+            ['id' => $ads],
+           
+        )->update( ['image' => $imgName]);
     }
+    BulletinBoard::updateOrInsert(
+        ['id' => $request->id],
+        [
+            'title'       => $request->input('title'),
+            'description' => $request->input('description'),
+            'price'       => $request->input('price'),
+        ]
+    );
+
+    return redirect('board');
+}
 
     /**
      * Remove the specified resource from storage.
