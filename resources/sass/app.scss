@@ -1,0 +1,28 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "image";
+@import "button";
+@import "main";
+@import "description";
+@import "imagesAndPhone";
+@import "descriptionSalesman";
+@import "price";
+@import "priceAndChange";
+@import "deleteAndChange";
+@import "change";
+@import "delete";
+@import "loading";
+@import "input";
+@import "form";
+@import "textArea";
+@import "inputPrice";
+@import "loadingAndSave";
+@import "media";
