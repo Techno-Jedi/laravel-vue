@@ -1,25 +1,26 @@
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Link } from '@inertiajs/vue3'
+import {Link} from '@inertiajs/vue3'
 
 export default {
     props: {
         boards: Array,
-        user_id:String
+        user_id: String
     },
     components: {
         AuthenticatedLayout,
         Link,
     },
-    methods:{
-        showPhone(event){
-    const attrValue = event.target;
-     if(attrValue){
-        let p = attrValue
-        p.innerHTML = "+7 XXX XXX XXXX"
-        setTimeout(() => p.innerHTML = "Показать телефон", 2000)
+    methods: {
+        showPhone(event) {
+            const attrValue = event.target;
+            if (attrValue) {
+                let p = attrValue
+                p.innerHTML = "+7 XXX XXX XXXX"
+                setTimeout(() => p.innerHTML = "Показать телефон", 2000)
+            }
         }
-    }}
+    }
 }
 </script>
 
@@ -31,7 +32,7 @@ export default {
                     <div class="image">
                         <img v-bind:src="`/storage/board/${board.image}`">
                     </div>
-                    <div class="button" ><p @click="showPhone"  v-bind:data-id="`${board.id}`">Показать телефон</p>
+                    <div class="button"><p @click="showPhone" v-bind:data-id="`${board.id}`">Показать телефон</p>
                     </div>
                 </div>
                 <div class="description-salesman">

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 use File;
 use App\Http\Requests\StoreBoardRequest;
@@ -8,7 +7,6 @@ use Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
-
 
 class BulletinBoardController extends Controller
 {
@@ -19,7 +17,6 @@ class BulletinBoardController extends Controller
      */
     public function index()
     {
-        // $ads = Bulletin_board::where('salesman', Auth::id())->get();
         return Inertia::render("Index", [
         "boards" => BulletinBoard::all(),
         "user_id" =>Auth::user()->name
@@ -46,7 +43,7 @@ class BulletinBoardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StoreBoardRequest $request)
-    {       
+    {
         if ($request->hasFile('image')) {
             $userId =  Auth::user()->name;
             $ads = new BulletinBoard();
@@ -73,6 +70,7 @@ class BulletinBoardController extends Controller
      * @param  \App\Models\BulletinBoard  $board
      * @return \Illuminate\Http\Response
      */
+
     public function show(BulletinBoard $board)
     {
         $ads = $board->toArray();
@@ -84,6 +82,7 @@ class BulletinBoardController extends Controller
      * @param  \App\Models\BulletinBoard  $board
      * @return \Illuminate\Http\Response
      */
+
     public function edit(BulletinBoard $board)
     {
         $ads = $board->toArray();
@@ -97,8 +96,9 @@ class BulletinBoardController extends Controller
      * @param  \App\Models\BulletinBoard  $board
      * @return \Illuminate\Http\Response
      */
+
     public function update(StoreBoardRequest $request, BulletinBoard $board)
-    {   
+    {
       if ($request->hasFile('image')) {
         $ads = $request->id;
         $file = $request->file('image');
@@ -107,8 +107,7 @@ class BulletinBoardController extends Controller
         Storage::putFileAs($upload_folder, $file, $filename);
         $imgName = substr($filename, 0);
         BulletinBoard::where(
-            ['id' => $ads],
-           
+        ['id' => $ads],
         )->update( ['image' => $imgName]);
     }
     BulletinBoard::updateOrInsert(
@@ -122,19 +121,19 @@ class BulletinBoardController extends Controller
 
     return redirect('board');
 }
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\BulletinBoard  $board
      * @return \Illuminate\Http\Response
      */
+
     public function destroy(BulletinBoard $board)
     {
         $board->delete();
         return redirect()->back();
     }
-    public function myfunc(BulletinBoard $board)
+    public function myAds(BulletinBoard $board)
     {
        return Inertia::render("Ribbon", ["boards" =>BulletinBoard::where('user_id', Auth::user()->name)->get()]);
     }

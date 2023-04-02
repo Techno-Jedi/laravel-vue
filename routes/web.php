@@ -39,6 +39,6 @@ require __DIR__.'/auth.php';
 
 Route::resource("board", BulletinBoardController::class)->middleware(['auth', 'verified']);
 
-Route::get('myAds', [BulletinBoardController::class,"myfunc"])->name("myAds");
+Route::get('myAds', [BulletinBoardController::class,"myAds"])->name("myAds");
 
 
